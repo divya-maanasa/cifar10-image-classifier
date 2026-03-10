@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: cifar10-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./model/saved_model:/app/model/saved_model:ro
+    environment:
+      - MODEL_PATH=/app/model/saved_model/cifar10_model.keras
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: cifar10-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

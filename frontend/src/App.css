@@ -1,0 +1,329 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   App.css  —  CIFAR-10 Image Classifier
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ── Reset & base ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary:     #4f46e5;
+  --primary-h:   #4338ca;
+  --accent:      #06b6d4;
+  --success:     #10b981;
+  --danger:      #ef4444;
+  --bg:          #f1f5f9;
+  --surface:     #ffffff;
+  --border:      #e2e8f0;
+  --text:        #1e293b;
+  --text-muted:  #64748b;
+  --radius:      12px;
+  --shadow:      0 4px 24px rgba(0,0,0,.08);
+  --transition:  0.2s ease;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+.app-main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  width: 100%;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .content-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+  color: #fff;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.header-inner { max-width: 800px; margin: 0 auto; }
+
+.app-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -.5px;
+  margin-bottom: .5rem;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  opacity: .85;
+  margin-bottom: 1.2rem;
+}
+
+.class-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem;
+}
+
+.pill {
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  padding: .25rem .75rem;
+  font-size: .78rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Error banner ───────────────────────────────────────────────────────── */
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: var(--radius);
+  padding: .85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  animation: fadeIn .2s ease;
+}
+
+.dismiss-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b91c1c;
+  font-size: 1.1rem;
+  padding: 0 .25rem;
+  line-height: 1;
+}
+
+/* ── Upload Panel ───────────────────────────────────────────────────────── */
+.upload-panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dropzone {
+  border: 2.5px dashed var(--border);
+  border-radius: var(--radius);
+  background: #f8fafc;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.dropzone:hover, .dropzone.drag-over {
+  border-color: var(--primary);
+  background: #eef2ff;
+}
+
+.dropzone.has-image { border-style: solid; }
+
+.dropzone-placeholder { text-align: center; padding: 2rem; }
+
+.drop-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+.drop-primary {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: .3rem;
+}
+
+.drop-secondary { color: var(--text-muted); font-size: .9rem; margin-bottom: .5rem; }
+.drop-hint { font-size: .78rem; color: #94a3b8; }
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 320px;
+  padding: .5rem;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.action-row { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+.btn {
+  padding: .7rem 1.4rem;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition), transform .1s ease, opacity var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: var(--primary); color: #fff; flex: 1; justify-content: center; }
+.btn-primary:not(:disabled):hover { background: var(--primary-h); }
+
+.btn-secondary { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { background: #e2e8f0; }
+
+/* ── Spinner ────────────────────────────────────────────────────────────── */
+.spinner {
+  width: 16px; height: 16px;
+  border: 2.5px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.file-info { font-size: .82rem; color: var(--text-muted); }
+
+/* ── Results Panel ──────────────────────────────────────────────────────── */
+.results-panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.results-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.results-icon { font-size: 3.5rem; }
+
+/* ── Result Card ────────────────────────────────────────────────────────── */
+.result-card { animation: fadeIn .3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.result-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: capitalize;
+  margin-bottom: .25rem;
+}
+
+.result-confidence {
+  font-size: 1.05rem;
+  color: var(--success);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.top-k h3 {
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: .8rem;
+}
+
+/* ── Confidence Bars ────────────────────────────────────────────────────── */
+.confidence-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 48px;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .55rem;
+  padding: .35rem .5rem;
+  border-radius: 6px;
+  transition: background var(--transition);
+}
+
+.confidence-row.top-prediction {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+}
+
+.conf-label {
+  font-size: .82rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conf-bar-wrap {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.conf-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 999px;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+.top-prediction .conf-bar {
+  background: linear-gradient(90deg, var(--primary), #7c3aed);
+}
+
+.conf-pct {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.inference-time {
+  margin-top: 1rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.app-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 1rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
