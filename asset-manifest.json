@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/cifar10-image-classifier/static/css/main.6f3cd951.css",
-    "main.js": "/cifar10-image-classifier/static/js/main.f3c916ae.js",
+    "main.js": "/cifar10-image-classifier/static/js/main.590273f3.js",
     "index.html": "/cifar10-image-classifier/index.html",
     "main.6f3cd951.css.map": "/cifar10-image-classifier/static/css/main.6f3cd951.css.map",
-    "main.f3c916ae.js.map": "/cifar10-image-classifier/static/js/main.f3c916ae.js.map"
+    "main.590273f3.js.map": "/cifar10-image-classifier/static/js/main.590273f3.js.map"
   },
   "entrypoints": [
     "static/css/main.6f3cd951.css",
-    "static/js/main.f3c916ae.js"
+    "static/js/main.590273f3.js"
   ]
 }
