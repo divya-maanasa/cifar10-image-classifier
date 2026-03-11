@@ -152,7 +152,7 @@ export default function App() {
       {/* Header */}
       <header className="app-header">
         <div className="header-inner">
-          <h1 className="app-title">🔍 CIFAR-10 Image Classifier</h1>
+          <h1 className="app-title">🔍 Image Classifier</h1>
           <p className="app-subtitle">
             Upload an image and let the CNN identify it across 10 categories
           </p>

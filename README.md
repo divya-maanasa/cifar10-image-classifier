@@ -1,4 +1,4 @@
-# 🔍 CIFAR-10 Image Classifier — Full-Stack Application
+# 🔍 Image Classifier — Full-Stack Application
 
 > **AcmeGrade Internship Project** | CNN + FastAPI + React
 
